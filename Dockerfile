@@ -2,11 +2,11 @@ FROM node:16
 
 WORKDIR /usr/src/app
 
-COPY package*.json ./
+COPY nodejs-application/package*.json ./
 
 RUN npm install
 
-COPY . .
+COPY nodejs-application/ ./
 
 RUN apt-get update && apt-get install -y openssh-server cron && \
     mkdir /var/run/sshd
@@ -18,4 +18,4 @@ EXPOSE 22 3000
 
 ENTRYPOINT service ssh start && cron && tail -f /dev/null
 
-CMD ["node", "app.js"]
+CMD ["node", "index.js"]
